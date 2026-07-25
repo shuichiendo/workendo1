@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "source": "sample",
+    "note": "サンプルデータです。NETSEAバイヤーAPIまたはCSVダウンロードのデータをこの形式に変換して置き換えてください。",
+    "generated_for": "workendo 商品発掘テストツール"
+  },
+  "fields_doc": {
+    "netsea_id": "NETSEA商品ID(直送可・承認済みサプライヤーのみ)",
+    "wholesale": "卸価格(仕入原価)",
+    "ship_cost": "仕入送料(直送時の送料負担分)",
+    "market_price": "想定販売価格(市場での実売価格・相場)",
+    "stock_qty": "在庫数",
+    "dropship": "消費者直送(ドロップシッピング)対応か",
+    "returnable": "返品対応可否",
+    "ship_days": "標準出荷日数",
+    "demand_index": "需要の代理指標(検索・レビュー等/0-100)",
+    "competitor_count": "同一商品の競合出品者数の目安",
+    "supplier_score": "サプライヤー信頼度(欠品率・出荷実績/0-100)"
+  },
+  "products": [
+    { "id": "C001", "netsea_id": "1201501", "supplier": "みらい雑貨", "name": "北欧風 リネン調クッションカバー 45×45", "category": "interior", "wholesale": 780, "ship_cost": 250, "market_price": 2480, "stock_qty": 320, "dropship": true, "returnable": true, "ship_days": 2, "demand_index": 72, "competitor_count": 8, "supplier_score": 88, "color": ["#d9c9b3", "#b5a68f"] },
+    { "id": "C002", "netsea_id": "1338920", "supplier": "アロマ工房", "name": "超音波アロマディフューザー 木目調 300ml", "category": "interior", "wholesale": 1450, "ship_cost": 400, "market_price": 3980, "stock_qty": 140, "dropship": true, "returnable": true, "ship_days": 2, "demand_index": 81, "competitor_count": 14, "supplier_score": 82, "color": ["#c9b89a", "#8a6f52"] },
+    { "id": "C003", "netsea_id": "1102233", "supplier": "キッチンズ", "name": "ステンレス真空タンブラー 480ml", "category": "kitchen", "wholesale": 640, "ship_cost": 300, "market_price": 1780, "stock_qty": 500, "dropship": true, "returnable": true, "ship_days": 1, "demand_index": 66, "competitor_count": 22, "supplier_score": 90, "color": ["#c7cdd2", "#8f979e"] },
+    { "id": "C004", "netsea_id": "1450012", "supplier": "キッチンズ", "name": "シリコン調理スプーン くすみカラー 5点", "category": "kitchen", "wholesale": 690, "ship_cost": 300, "market_price": 2280, "stock_qty": 210, "dropship": true, "returnable": true, "ship_days": 2, "demand_index": 58, "competitor_count": 6, "supplier_score": 85, "color": ["#e0b7a0", "#c58f74"] },
+    { "id": "C005", "netsea_id": "1560078", "supplier": "ビューティラボ", "name": "USB充電式 ナノフェイススチーマー", "category": "beauty", "wholesale": 1180, "ship_cost": 350, "market_price": 2980, "stock_qty": 90, "dropship": true, "returnable": false, "ship_days": 3, "demand_index": 84, "competitor_count": 31, "supplier_score": 71, "color": ["#e6c6d4", "#c493a8"] },
+    { "id": "C006", "netsea_id": "1560411", "supplier": "コットンハウス", "name": "オーガニックコットン フェイスタオル 3枚組", "category": "beauty", "wholesale": 520, "ship_cost": 250, "market_price": 1780, "stock_qty": 640, "dropship": true, "returnable": true, "ship_days": 1, "demand_index": 61, "competitor_count": 12, "supplier_score": 92, "color": ["#e3ddd2", "#bcae9a"] },
+    { "id": "C007", "netsea_id": "1620990", "supplier": "レザーワークス", "name": "本革風 ミニショルダーバッグ", "category": "fashion", "wholesale": 1350, "ship_cost": 400, "market_price": 3480, "stock_qty": 75, "dropship": true, "returnable": true, "ship_days": 3, "demand_index": 69, "competitor_count": 18, "supplier_score": 78, "color": ["#b79b7d", "#7d6248"] },
+    { "id": "C008", "netsea_id": "1633102", "supplier": "サングラス堂", "name": "折りたたみサングラス UV400 ケース付", "category": "fashion", "wholesale": 480, "ship_cost": 250, "market_price": 1580, "stock_qty": 30, "dropship": true, "returnable": true, "ship_days": 4, "demand_index": 44, "competitor_count": 40, "supplier_score": 63, "color": ["#a9b0b6", "#6e767c"] },
+    { "id": "C009", "netsea_id": "1701255", "supplier": "ペットライフ", "name": "犬用 洗える折りたたみベッド Mサイズ", "category": "pet", "wholesale": 1620, "ship_cost": 600, "market_price": 3980, "stock_qty": 110, "dropship": true, "returnable": true, "ship_days": 2, "demand_index": 76, "competitor_count": 9, "supplier_score": 86, "color": ["#cbb9a6", "#9a836c"] },
+    { "id": "C010", "netsea_id": "1701620", "supplier": "ペットライフ", "name": "自動給水器 ペット用 2L 静音", "category": "pet", "wholesale": 1980, "ship_cost": 500, "market_price": 3680, "stock_qty": 55, "dropship": true, "returnable": false, "ship_days": 3, "demand_index": 70, "competitor_count": 25, "supplier_score": 74, "color": ["#bcd0d4", "#7f9aa0"] },
+    { "id": "C011", "netsea_id": "1810044", "supplier": "文具のもり", "name": "本革風 A5システム手帳 6穴", "category": "stationery", "wholesale": 890, "ship_cost": 250, "market_price": 2680, "stock_qty": 180, "dropship": true, "returnable": true, "ship_days": 2, "demand_index": 52, "competitor_count": 7, "supplier_score": 83, "color": ["#c0a48a", "#836a52"] },
+    { "id": "C012", "netsea_id": "1820071", "supplier": "文具のもり", "name": "デスクオーガナイザー 木製 ペン立て", "category": "stationery", "wholesale": 620, "ship_cost": 350, "market_price": 1480, "stock_qty": 240, "dropship": true, "returnable": true, "ship_days": 2, "demand_index": 40, "competitor_count": 16, "supplier_score": 80, "color": ["#d3c2ab", "#a68b6b"] },
+    { "id": "C013", "netsea_id": "1339001", "supplier": "ライトニング", "name": "LEDセンサーライト 人感 USB充電 2個", "category": "interior", "wholesale": 940, "ship_cost": 300, "market_price": 1980, "stock_qty": 12, "dropship": true, "returnable": false, "ship_days": 5, "demand_index": 63, "competitor_count": 34, "supplier_score": 58, "color": ["#d8d2c6", "#a8a091"] },
+    { "id": "C014", "netsea_id": "1561200", "supplier": "ビューティラボ", "name": "頭皮ケア シリコンブラシ 電動風", "category": "beauty", "wholesale": 720, "ship_cost": 300, "market_price": 1680, "stock_qty": 0, "dropship": true, "returnable": true, "ship_days": 3, "demand_index": 55, "competitor_count": 20, "supplier_score": 69, "color": ["#e2c9d1", "#bd97a4"] },
+    { "id": "C015", "netsea_id": "1103550", "supplier": "キッチンズ", "name": "食洗機対応 竹製カトラリー 8本", "category": "kitchen", "wholesale": 1100, "ship_cost": 350, "market_price": 2180, "stock_qty": 95, "dropship": false, "returnable": true, "ship_days": 4, "demand_index": 48, "competitor_count": 11, "supplier_score": 81, "color": ["#d0c3a4", "#a3906a"] }
+  ]
+}

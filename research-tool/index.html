@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>workendo | 商品発掘テストツール</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#f4f5f7; --panel:#fff; --ink:#26292e; --muted:#7b8087; --line:#e4e7eb;
+      --accent:#2f6f6a; --accent2:#3d8b84; --good:#1f9d57; --warn:#c98a1a; --bad:#c0503e;
+      --shadow:0 2px 10px rgba(30,40,50,.06); --shadow2:0 8px 28px rgba(30,40,50,.14);
+    }
+    body{font-family:'Noto Sans JP',sans-serif;font-weight:300;background:var(--bg);color:var(--ink);line-height:1.6}
+    h1,h2,h3{font-weight:500}
+    .wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+
+    header{background:var(--ink);color:#fff}
+    .head{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:16px;flex-wrap:wrap}
+    .brand{font-size:1.15rem;font-weight:700;letter-spacing:.04em}
+    .brand span{color:#7fd1c8}
+    .brand small{display:block;font-size:.7rem;font-weight:300;color:#aeb6bd;letter-spacing:.02em}
+    .src-badge{font-size:.72rem;background:#3a3f46;color:#cfd6dc;padding:5px 12px;border-radius:999px}
+    .src-badge b{color:#ffcf6b}
+
+    .banner{background:#fff7e6;border-bottom:1px solid #f0e0b8;color:#8a6d2a;font-size:.8rem;padding:9px 0}
+    .banner .wrap{display:flex;gap:8px;align-items:center}
+
+    /* controls */
+    .controls{background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow);position:sticky;top:0;z-index:20}
+    .ctl-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr) auto;gap:14px;padding:16px 0;align-items:end}
+    .field label{display:block;font-size:.72rem;color:var(--muted);margin-bottom:5px;font-weight:500}
+    .field input[type=text],.field select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:.85rem;background:#fbfbfc;color:var(--ink)}
+    .field.range output{font-size:.8rem;color:var(--accent);font-weight:500;margin-left:6px}
+    input[type=range]{width:100%;accent-color:var(--accent)}
+    .toggle{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--ink);white-space:nowrap}
+    .toggle input{width:16px;height:16px;accent-color:var(--accent)}
+
+    /* summary */
+    .summary{display:flex;gap:14px;flex-wrap:wrap;padding:18px 0 4px}
+    .stat{background:var(--panel);border-radius:14px;padding:14px 20px;box-shadow:var(--shadow);flex:1;min-width:150px}
+    .stat .n{font-size:1.7rem;font-weight:700;color:var(--accent)}
+    .stat .l{font-size:.74rem;color:var(--muted)}
+    .stat.good .n{color:var(--good)} .stat.bad .n{color:var(--bad)}
+
+    .barrow{display:flex;align-items:center;justify-content:space-between;padding:14px 2px 6px}
+    .barrow h2{font-size:1rem} .barrow .sortsel{font-size:.8rem}
+    .barrow select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:.8rem;background:#fff}
+
+    /* grid */
+    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:6px 0 60px}
+    .card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--line);transition:box-shadow .18s,transform .18s}
+    .card:hover{box-shadow:var(--shadow2);transform:translateY(-2px)}
+    .card .top{display:flex;gap:12px;padding:14px}
+    .thumb{width:64px;height:64px;border-radius:10px;flex-shrink:0;display:grid;place-items:center;color:#fff;font-weight:700;font-size:1.4rem}
+    .card .nm{font-size:.86rem;font-weight:400;line-height:1.4}
+    .card .sup{font-size:.72rem;color:var(--muted);margin-top:3px}
+    .rankchip{position:relative}
+    .verdict{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:.95rem;padding:2px 10px;border-radius:8px}
+    .v-A{background:#e3f6ea;color:var(--good)} .v-B{background:#eef7e6;color:#4b8b2a}
+    .v-C{background:#fdf3e0;color:var(--warn)} .v-D{background:#fbe9e6;color:var(--bad)}
+    .metrics{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--line)}
+    .metrics div{padding:10px 8px;text-align:center;border-right:1px solid var(--line)}
+    .metrics div:last-child{border-right:none}
+    .metrics .mv{font-size:1.05rem;font-weight:700}
+    .metrics .ml{font-size:.66rem;color:var(--muted)}
+    .m-good{color:var(--good)} .m-warn{color:var(--warn)} .m-bad{color:var(--bad)}
+    .flags{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px;border-top:1px solid var(--line)}
+    .flag{font-size:.66rem;padding:2px 8px;border-radius:6px;background:#eef1f4;color:#5a6169}
+    .flag.warn{background:#fdeede;color:#a56a17} .flag.stop{background:#fbe3df;color:#a53d2c}
+    .detailbtn{width:100%;padding:9px;font-family:inherit;font-size:.76rem;color:var(--accent);background:#f2f7f6;border:none;border-top:1px solid var(--line);cursor:pointer}
+    .detailbtn:hover{background:#e8f1ef}
+    .breakdown{display:none;padding:12px 14px;border-top:1px solid var(--line);background:#fafbfc;font-size:.76rem}
+    .breakdown.open{display:block}
+    .brk-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed var(--line)}
+    .brk-row.tot{font-weight:700;border-bottom:none;padding-top:6px}
+    .brk-row .neg{color:var(--bad)}
+    .scorebars{margin-top:10px}
+    .sb{display:flex;align-items:center;gap:8px;margin:4px 0}
+    .sb .lbl{width:64px;font-size:.68rem;color:var(--muted)}
+    .sb .track{flex:1;height:7px;background:#e9edf0;border-radius:5px;overflow:hidden}
+    .sb .fill{height:100%;background:var(--accent2);border-radius:5px}
+    .sb .val{width:42px;text-align:right;font-size:.68rem;color:var(--ink)}
+    .netsea-link{display:inline-block;margin-top:8px;font-size:.72rem;color:var(--accent);text-decoration:underline}
+
+    footer{padding:26px 0;text-align:center;color:var(--muted);font-size:.76rem;border-top:1px solid var(--line);background:var(--panel)}
+    .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px}
+    @media(max-width:900px){.ctl-grid{grid-template-columns:1fr 1fr}.field.range{grid-column:1/-1}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap head">
+      <div class="brand">work<span>endo</span> 商品発掘ツール
+        <small>NETSEA直送商品を利益・スコアで自動採点・ランキング</small>
+      </div>
+      <div class="src-badge">データソース: <b id="srcLabel">サンプル</b></div>
+    </div>
+  </header>
+
+  <div class="banner">
+    <div class="wrap">⚠️ これはテストツールです。現在はサンプルデータで動作中。NETSEAバイヤーAPI／CSVを接続すると実データで自動発掘できます。</div>
+  </div>
+
+  <div class="controls">
+    <div class="wrap">
+      <div class="ctl-grid">
+        <div class="field">
+          <label>キーワード検索</label>
+          <input type="text" id="q" placeholder="商品名・サプライヤー">
+        </div>
+        <div class="field">
+          <label>販売チャネル</label>
+          <select id="channel">
+            <option value="base">自社サイト(BASE)</option>
+            <option value="stripe">自社サイト(Stripe)</option>
+            <option value="amazon">Amazon</option>
+            <option value="rakuten">楽天市場</option>
+            <option value="yahoo">Yahoo!ショッピング</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>カテゴリ</label>
+          <select id="cat"></select>
+        </div>
+        <div class="field range">
+          <label>目標粗利率 <output id="mOut">15%</output></label>
+          <input type="range" id="margin" min="5" max="40" value="15" step="1">
+        </div>
+        <div class="field range">
+          <label>広告費率 <output id="aOut">10%</output></label>
+          <input type="range" id="ad" min="0" max="30" value="10" step="1">
+        </div>
+        <div class="field" style="display:flex;flex-direction:column;gap:6px">
+          <label class="toggle"><input type="checkbox" id="onlyPass">採用ラインのみ</label>
+          <label class="toggle"><input type="checkbox" id="onlyDrop" checked>直送可のみ</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="summary" id="summary"></div>
+    <div class="barrow">
+      <h2 id="resultTitle">発掘結果</h2>
+      <div class="sortsel">並び替え:
+        <select id="sort">
+          <option value="score">総合スコア順</option>
+          <option value="margin">粗利率順</option>
+          <option value="profit">粗利額順</option>
+          <option value="demand">需要順</option>
+        </select>
+      </div>
+    </div>
+    <div class="cards" id="cards"></div>
+  </main>
+
+  <footer class="wrap">
+    workendo 商品発掘テストツール ／ 採点ロジックは提案書の評価軸（収益性・需要・競争・供給・運用規約）に準拠
+  </footer>
+
+  <script>
+    const CH = {
+      base:   {name:'自社サイト(BASE)',   mall:0.03, pay:0.036, ad_default:0.10},
+      stripe: {name:'自社サイト(Stripe)',  mall:0.00, pay:0.036, ad_default:0.12},
+      amazon: {name:'Amazon',             mall:0.15, pay:0.00,  ad_default:0.08},
+      rakuten:{name:'楽天市場',            mall:0.08, pay:0.033, ad_default:0.05},
+      yahoo:  {name:'Yahoo!ショッピング',  mall:0.03, pay:0.035, ad_default:0.06},
+    };
+    const CAT = {all:'すべて',interior:'インテリア',kitchen:'キッチン',beauty:'美容・健康',fashion:'ファッション',pet:'ペット',stationery:'文具'};
+    const yen = n => '¥'+Math.round(n).toLocaleString('ja-JP');
+    const pct = n => (n*100).toFixed(1)+'%';
+    const $ = s => document.querySelector(s);
+    let DATA=[], RETURN_RATE=0.03;
+
+    function calc(p){
+      const ch = CH[$('#channel').value];
+      const ad = parseInt($('#ad').value)/100;
+      const cost = p.wholesale + p.ship_cost;
+      const P = p.market_price;
+      const mallFee = P*ch.mall, payFee = P*ch.pay;
+      const returnLoss = cost*RETURN_RATE;
+      const adCost = P*ad;
+      const totalCost = cost + mallFee + payFee + returnLoss + adCost;
+      const profit = P - totalCost;
+      const margin = P>0 ? profit/P : 0;
+      return {P,cost,mallFee,payFee,returnLoss,adCost,totalCost,profit,margin,ch};
+    }
+
+    // 100点採点（提案書の配点に準拠）
+    function score(p, c){
+      const profitability = Math.max(0, Math.min(30, (c.margin/0.30)*30));       // 30
+      const demand = (p.demand_index/100)*20;                                     // 20
+      const competition = Math.max(0, 15 - (p.competitor_count/40)*15);           // 15
+      const supply = (p.supplier_score/100)*12 + (p.stock_qty>20?3:p.stock_qty>0?1:0); // 15
+      let ops = 0;                                                                 // 20
+      if(p.dropship) ops+=8;
+      if(p.returnable) ops+=5;
+      ops += p.ship_days<=2?7 : p.ship_days<=3?4 : p.ship_days<=4?2:0;
+      const parts = {収益性:profitability, 需要:demand, 競争:competition, 供給:supply, 運用規約:ops};
+      const total = Object.values(parts).reduce((a,b)=>a+b,0);
+      return {total, parts, max:{収益性:30,需要:20,競争:15,供給:15,運用規約:20}};
+    }
+
+    function verdict(total, margin, targetMargin){
+      // 粗利が目標未満なら最低でもCへ落とす（利益優先）
+      if(margin < 0.10) return 'D';
+      if(margin < targetMargin) return total>=65?'C':'D';
+      if(total>=80) return 'A';
+      if(total>=65) return 'B';
+      if(total>=50) return 'C';
+      return 'D';
+    }
+    const VLABEL={A:'A 優先採用',B:'B 条件付',C:'C 保留',D:'D 見送り'};
+
+    async function boot(){
+      try{
+        const res = await fetch('data/candidates.json');
+        const j = await res.json();
+        DATA = j.products;
+        $('#srcLabel').textContent = j.meta.source==='sample'?'サンプル':j.meta.source;
+      }catch(e){
+        $('#cards').innerHTML='<p class="empty">データ(data/candidates.json)を読み込めませんでした。簡易サーバー経由(python3 -m http.server)で開いてください。</p>';
+        return;
+      }
+      // categories
+      const cats = ['all',...new Set(DATA.map(p=>p.category))];
+      $('#cat').innerHTML = cats.map(c=>`<option value="${c}">${CAT[c]||c}</option>`).join('');
+      // channel change → default ad
+      $('#channel').addEventListener('change',()=>{ $('#ad').value=Math.round(CH[$('#channel').value].ad_default*100); syncOut(); render();});
+      ['q','cat','margin','ad','sort','onlyPass','onlyDrop'].forEach(id=>{
+        $('#'+id).addEventListener('input',()=>{syncOut();render();});
+      });
+      syncOut(); render();
+    }
+    function syncOut(){ $('#mOut').textContent=$('#margin').value+'%'; $('#aOut').textContent=$('#ad').value+'%'; }
+
+    function render(){
+      const q=$('#q').value.trim().toLowerCase();
+      const cat=$('#cat').value;
+      const target=parseInt($('#margin').value)/100;
+      const onlyPass=$('#onlyPass').checked, onlyDrop=$('#onlyDrop').checked;
+      const sort=$('#sort').value;
+
+      let rows = DATA.map(p=>{
+        const c=calc(p); const s=score(p,c); const v=verdict(s.total,c.margin,target);
+        return {p,c,s,v};
+      });
+      rows = rows.filter(r=>{
+        if(onlyDrop && !r.p.dropship) return false;
+        if(cat!=='all' && r.p.category!==cat) return false;
+        if(q && !(r.p.name.toLowerCase().includes(q)||r.p.supplier.toLowerCase().includes(q))) return false;
+        if(onlyPass && !(r.v==='A'||r.v==='B')) return false;
+        return true;
+      });
+      rows.sort((a,b)=>{
+        if(sort==='margin') return b.c.margin-a.c.margin;
+        if(sort==='profit') return b.c.profit-a.c.profit;
+        if(sort==='demand') return b.p.demand_index-a.p.demand_index;
+        return b.s.total-a.s.total;
+      });
+
+      // summary
+      const all = DATA.map(p=>{const c=calc(p);const s=score(p,c);return {v:verdict(s.total,c.margin,target),c};});
+      const pass = all.filter(r=>r.v==='A'||r.v==='B').length;
+      const avgMargin = all.length? all.reduce((a,r)=>a+r.c.margin,0)/all.length : 0;
+      $('#summary').innerHTML = `
+        <div class="stat"><div class="n">${DATA.length}</div><div class="l">候補商品(サンプル)</div></div>
+        <div class="stat good"><div class="n">${pass}</div><div class="l">採用ライン(A/B)</div></div>
+        <div class="stat"><div class="n">${(avgMargin*100).toFixed(1)}%</div><div class="l">平均粗利率(${CH[$('#channel').value].name})</div></div>
+        <div class="stat ${pass? '':'bad'}"><div class="n">${rows.length}</div><div class="l">現在の表示件数</div></div>`;
+      $('#resultTitle').textContent = `発掘結果（${rows.length}件）`;
+
+      if(!rows.length){ $('#cards').innerHTML='<p class="empty">条件に合う商品がありません。フィルタを緩めてみてください。</p>'; return; }
+
+      $('#cards').innerHTML = rows.map(r=>card(r)).join('');
+      document.querySelectorAll('.detailbtn').forEach(b=>b.onclick=()=>{
+        const bd=b.previousElementSibling; bd.classList.toggle('open');
+        b.textContent = bd.classList.contains('open')?'内訳を閉じる ▲':'利益・スコアの内訳 ▼';
+      });
+    }
+
+    function card(r){
+      const {p,c,s,v}=r;
+      const mCls = c.margin>=0.20?'m-good':c.margin>=0.15?'':c.margin>=0.10?'m-warn':'m-bad';
+      const flags=[];
+      if(!p.dropship) flags.push('<span class="flag stop">直送不可</span>');
+      if(p.stock_qty===0) flags.push('<span class="flag stop">在庫切れ</span>');
+      else if(p.stock_qty<20) flags.push('<span class="flag warn">在庫少('+p.stock_qty+')</span>');
+      if(!p.returnable) flags.push('<span class="flag warn">返品不可</span>');
+      if(p.ship_days>=4) flags.push('<span class="flag warn">出荷'+p.ship_days+'日</span>');
+      if(p.competitor_count>=25) flags.push('<span class="flag warn">競合多('+p.competitor_count+')</span>');
+      if(!flags.length) flags.push('<span class="flag">問題なし</span>');
+
+      const bars = Object.keys(s.parts).map(k=>{
+        const val=s.parts[k], mx=s.max[k];
+        return `<div class="sb"><span class="lbl">${k}</span><span class="track"><span class="fill" style="width:${(val/mx)*100}%"></span></span><span class="val">${val.toFixed(0)}/${mx}</span></div>`;
+      }).join('');
+
+      return `
+      <div class="card">
+        <div class="top">
+          <div class="thumb" style="background:linear-gradient(135deg,${p.color[0]},${p.color[1]})">${p.name.charAt(0)}</div>
+          <div style="flex:1;min-width:0">
+            <div class="nm">${p.name}</div>
+            <div class="sup">${p.supplier} ・ ${CAT[p.category]||p.category}</div>
+            <div style="margin-top:6px"><span class="verdict v-${v}">${VLABEL[v]}</span></div>
+          </div>
+        </div>
+        <div class="metrics">
+          <div><div class="mv ${mCls}">${pct(c.margin)}</div><div class="ml">粗利率</div></div>
+          <div><div class="mv">${yen(c.profit)}</div><div class="ml">粗利額/個</div></div>
+          <div><div class="mv">${s.total.toFixed(0)}</div><div class="ml">総合スコア</div></div>
+        </div>
+        <div class="flags">${flags.join('')}</div>
+        <div class="breakdown">
+          <div class="brk-row"><span>想定販売価格</span><span>${yen(c.P)}</span></div>
+          <div class="brk-row"><span>仕入原価＋送料</span><span class="neg">−${yen(c.cost)}</span></div>
+          <div class="brk-row"><span>モール手数料</span><span class="neg">−${yen(c.mallFee)}</span></div>
+          <div class="brk-row"><span>決済手数料</span><span class="neg">−${yen(c.payFee)}</span></div>
+          <div class="brk-row"><span>返品損(想定)</span><span class="neg">−${yen(c.returnLoss)}</span></div>
+          <div class="brk-row"><span>広告費</span><span class="neg">−${yen(c.adCost)}</span></div>
+          <div class="brk-row tot"><span>粗利額</span><span>${yen(c.profit)}（${pct(c.margin)}）</span></div>
+          <div class="scorebars">${bars}</div>
+          <a class="netsea-link" href="https://www.netsea.jp/shop/${encodeURIComponent(p.netsea_id)}" target="_blank" rel="noopener">NETSEAで商品を確認 (ID:${p.netsea_id}) ↗</a>
+        </div>
+        <button class="detailbtn">利益・スコアの内訳 ▼</button>
+      </div>`;
+    }
+
+    boot();
+  </script>
+</body>
+</html>
