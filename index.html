@@ -3,908 +3,420 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ma-fille | 小さなひと皿に、大きな感動を</title>
+  <title>workendo | 暮らしの雑貨店</title>
+  <meta name="description" content="毎日をちょっと素敵にする暮らしの雑貨をお届けするセレクトショップ">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* ===== Reset & Base ===== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    :root {
+      --bg: #faf7f2;
+      --card: #ffffff;
+      --ink: #3a3733;
+      --muted: #8a8378;
+      --line: #ece6dc;
+      --accent: #b08968;
+      --accent-dark: #8a6a4f;
+      --price: #6b4f3a;
+      --sale: #c0654e;
+      --shadow: 0 6px 24px rgba(120, 100, 80, 0.10);
+    }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Noto Sans JP', sans-serif;
       font-weight: 300;
-      color: #3A3A3A;
-      background-color: #FDF8F0;
-      line-height: 1.8;
-      overflow-x: hidden;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.75;
     }
-    img { max-width: 100%; height: auto; display: block; }
+    img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
-    h1, h2, h3, h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      line-height: 1.3;
-    }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    h1, h2, h3 { font-weight: 500; line-height: 1.3; }
+    .serif { font-family: 'Cormorant Garamond', serif; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-    /* ===== Utility ===== */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .section-title {
-      text-align: center;
-      margin-bottom: 60px;
+    /* ===== Header ===== */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
     }
-    .section-title h2 {
-      font-size: 2.4rem;
-      color: #2D4A3E;
-      margin-bottom: 8px;
-      letter-spacing: 0.05em;
-    }
-    .section-title .en {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      color: #C5A572;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-    .section-title .line {
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: #C5A572;
-      margin: 16px auto 0;
-    }
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ===== Navigation ===== */
     .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      padding: 0 40px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(253, 248, 240, 0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(197, 165, 114, 0.15);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px;
     }
-    .nav.scrolled {
-      background: rgba(253, 248, 240, 0.98);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    .logo { font-size: 1.5rem; letter-spacing: 0.08em; font-weight: 600; }
+    .logo span { color: var(--accent); }
+    .cart-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 999px;
+      background: var(--ink); color: #fff; font-size: 0.85rem;
+      transition: transform .15s ease, background .2s ease;
     }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 500;
-      color: #2D4A3E;
-      letter-spacing: 0.08em;
+    .cart-btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .cart-count {
+      min-width: 20px; height: 20px; padding: 0 5px;
+      background: var(--accent); border-radius: 999px;
+      font-size: 0.72rem; display: grid; place-items: center; font-weight: 500;
     }
-    .nav-logo span { color: #C5A572; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a {
-      font-size: 0.8rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      color: #3A3A3A;
-      position: relative;
-      transition: color 0.3s ease;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: #C5A572;
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover { color: #C5A572; }
-    .nav-links a:hover::after { width: 100%; }
-
-    /* Hamburger */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 1.5px;
-      background: #2D4A3E;
-      transition: all 0.3s ease;
-    }
-    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
-    .hamburger.active span:nth-child(2) { opacity: 0; }
-    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
 
     /* ===== Hero ===== */
     .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 600px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 72px 0 60px;
       text-align: center;
-      overflow: hidden;
+      background:
+        radial-gradient(1200px 400px at 50% -10%, #fff 0%, transparent 70%),
+        linear-gradient(180deg, #f4ede2 0%, var(--bg) 100%);
     }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: url('images/original-06.jpg') center/cover no-repeat;
-      transform: scale(1.05);
-      animation: heroZoom 20s ease-in-out infinite alternate;
+    .hero .en { font-family: 'Cormorant Garamond', serif; letter-spacing: 0.3em; color: var(--accent); text-transform: uppercase; font-size: 0.85rem; }
+    .hero h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin: 14px 0 18px; letter-spacing: 0.04em; }
+    .hero p { color: var(--muted); font-size: 1rem; }
+    .hero .cta {
+      display: inline-block; margin-top: 30px; padding: 13px 34px;
+      background: var(--ink); color: #fff; border-radius: 999px; font-size: 0.9rem;
+      transition: background .2s, transform .15s;
     }
-    @keyframes heroZoom {
-      from { transform: scale(1.05); }
-      to { transform: scale(1.12); }
+    .hero .cta:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+    /* ===== Categories ===== */
+    .filters {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      margin: 44px 0 34px;
     }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(45, 74, 62, 0.45) 0%,
-        rgba(45, 74, 62, 0.55) 50%,
-        rgba(45, 74, 62, 0.65) 100%
-      );
+    .chip {
+      padding: 8px 20px; border-radius: 999px; font-size: 0.85rem;
+      background: var(--card); border: 1px solid var(--line); color: var(--muted);
+      transition: all .18s ease;
     }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      color: #fff;
-      padding: 0 24px;
+    .chip:hover { border-color: var(--accent); color: var(--accent-dark); }
+    .chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    /* ===== Product grid ===== */
+    .grid {
+      display: grid; gap: 26px;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      padding-bottom: 70px;
     }
-    .hero-content .catchcopy {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 2.6rem;
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      margin-bottom: 16px;
-      opacity: 0;
-      animation: fadeUp 1.2s ease 0.3s forwards;
+    .card {
+      background: var(--card); border-radius: 16px; overflow: hidden;
+      box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease;
+      display: flex; flex-direction: column;
     }
-    .hero-content .catchcopy-en {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      color: #C5A572;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 1.2s ease 0.6s forwards;
+    .card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(120,100,80,.16); }
+    .thumb {
+      aspect-ratio: 1 / 1; position: relative; cursor: pointer;
+      display: grid; place-items: center;
     }
-    .hero-content .sub {
-      font-size: 0.95rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      opacity: 0;
-      animation: fadeUp 1.2s ease 0.9s forwards;
+    .thumb .ph {
+      font-family: 'Cormorant Garamond', serif; color: rgba(255,255,255,.85);
+      font-size: 2.6rem; letter-spacing: 0.05em; user-select: none;
     }
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      color: rgba(255,255,255,0.7);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      animation: fadeUp 1.2s ease 1.2s forwards;
-      opacity: 0;
+    .badges { position: absolute; top: 10px; left: 10px; display: flex; flex-direction: column; gap: 6px; }
+    .badge { padding: 3px 10px; border-radius: 999px; font-size: 0.68rem; background: rgba(255,255,255,.92); color: var(--accent-dark); font-weight: 500; }
+    .badge.free { background: var(--accent); color: #fff; }
+    .soldout {
+      position: absolute; inset: 0; background: rgba(58,55,51,.55);
+      display: grid; place-items: center; color: #fff; letter-spacing: 0.15em; font-size: 0.9rem;
     }
-    .hero-scroll::after {
-      content: '';
-      width: 1px;
-      height: 40px;
-      background: rgba(255,255,255,0.5);
-      animation: scrollLine 2s ease-in-out infinite;
+    .card .info { padding: 14px 16px 18px; display: flex; flex-direction: column; flex: 1; }
+    .card .name { font-size: 0.92rem; font-weight: 400; line-height: 1.5; min-height: 2.9em; }
+    .card .price-row { margin-top: auto; padding-top: 12px; display: flex; align-items: baseline; justify-content: space-between; }
+    .price { font-size: 1.25rem; color: var(--price); font-weight: 500; }
+    .price small { font-size: 0.72rem; color: var(--muted); font-weight: 300; }
+    .add {
+      padding: 8px 14px; border-radius: 10px; background: #f1ebe0; color: var(--accent-dark);
+      font-size: 0.8rem; font-weight: 500; transition: background .18s;
     }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .add:hover { background: var(--accent); color: #fff; }
+    .add:disabled { background: #eee; color: #bbb; cursor: not-allowed; }
+
+    /* ===== Modal (product detail) ===== */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(40,35,30,.5); backdrop-filter: blur(3px);
+      display: none; z-index: 100; opacity: 0; transition: opacity .2s;
     }
-    @keyframes scrollLine {
-      0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
-      50% { opacity: 1; transform: scaleY(1); }
+    .overlay.open { display: block; opacity: 1; }
+    .modal {
+      position: fixed; z-index: 101; top: 50%; left: 50%; transform: translate(-50%, -46%);
+      width: min(720px, 92vw); max-height: 88vh; overflow-y: auto;
+      background: var(--card); border-radius: 20px; box-shadow: 0 30px 80px rgba(0,0,0,.3);
+      opacity: 0; pointer-events: none; transition: opacity .22s, transform .22s;
+    }
+    .modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+    .modal .m-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .modal .m-img { aspect-ratio: 1/1; display: grid; place-items: center; }
+    .modal .m-img .ph { font-family: 'Cormorant Garamond', serif; color: rgba(255,255,255,.85); font-size: 3.4rem; }
+    .modal .m-body { padding: 30px 28px; }
+    .modal .m-cat { font-size: 0.75rem; color: var(--accent); letter-spacing: 0.08em; }
+    .modal .m-name { font-size: 1.3rem; margin: 8px 0 14px; font-weight: 500; }
+    .modal .m-desc { font-size: 0.9rem; color: #6a645b; margin-bottom: 20px; }
+    .modal .m-price { font-size: 1.7rem; color: var(--price); font-weight: 500; margin-bottom: 20px; }
+    .modal .m-price small { font-size: 0.8rem; color: var(--muted); }
+    .modal .m-add {
+      width: 100%; padding: 14px; border-radius: 12px; background: var(--ink); color: #fff;
+      font-size: 0.95rem; font-weight: 500; transition: background .2s;
+    }
+    .modal .m-add:hover { background: var(--accent-dark); }
+    .close-x {
+      position: absolute; top: 14px; right: 16px; width: 34px; height: 34px;
+      border-radius: 50%; background: rgba(255,255,255,.85); font-size: 1.2rem; color: var(--ink);
+      display: grid; place-items: center; z-index: 2;
     }
 
-    /* ===== About ===== */
-    .about {
-      padding: 120px 0;
-      background: #FDF8F0;
+    /* ===== Cart drawer ===== */
+    .drawer {
+      position: fixed; top: 0; right: 0; z-index: 110; height: 100%; width: min(400px, 90vw);
+      background: var(--bg); box-shadow: -10px 0 40px rgba(0,0,0,.2);
+      transform: translateX(100%); transition: transform .28s ease;
+      display: flex; flex-direction: column;
     }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-    .about-image {
-      position: relative;
-    }
-    .about-image img {
-      border-radius: 4px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    }
-    .about-image::before {
-      content: '';
-      position: absolute;
-      top: -15px;
-      left: -15px;
-      width: 80px;
-      height: 80px;
-      border-top: 2px solid #C5A572;
-      border-left: 2px solid #C5A572;
-      pointer-events: none;
-    }
-    .about-image::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      right: -15px;
-      width: 80px;
-      height: 80px;
-      border-bottom: 2px solid #C5A572;
-      border-right: 2px solid #C5A572;
-      pointer-events: none;
-    }
-    .about-text h2 {
-      font-size: 2rem;
-      color: #2D4A3E;
-      margin-bottom: 8px;
-    }
-    .about-text .en {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.85rem;
-      color: #C5A572;
-      letter-spacing: 0.15em;
-      margin-bottom: 24px;
-    }
-    .about-text p {
-      font-size: 0.95rem;
-      line-height: 2;
-      color: #555;
-    }
+    .drawer.open { transform: translateX(0); }
+    .drawer h3 { padding: 22px 22px 16px; font-size: 1.15rem; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+    .drawer .items { flex: 1; overflow-y: auto; padding: 8px 16px; }
+    .empty { text-align: center; color: var(--muted); padding: 60px 20px; font-size: 0.9rem; }
+    .citem { display: flex; gap: 12px; padding: 14px 6px; border-bottom: 1px solid var(--line); }
+    .citem .ci-img { width: 60px; height: 60px; border-radius: 10px; flex-shrink: 0; display:grid; place-items:center; }
+    .citem .ci-img span { font-family:'Cormorant Garamond',serif; color:#fff; font-size:1.3rem; }
+    .citem .ci-main { flex: 1; min-width: 0; }
+    .citem .ci-name { font-size: 0.82rem; line-height: 1.4; }
+    .citem .ci-price { font-size: 0.9rem; color: var(--price); margin-top: 4px; }
+    .qty { display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; }
+    .qty button { width: 24px; height: 24px; border-radius: 6px; background: var(--card); border: 1px solid var(--line); font-size: 1rem; line-height: 1; color: var(--ink); }
+    .qty span { font-size: 0.85rem; min-width: 18px; text-align: center; }
+    .ci-remove { font-size: 0.72rem; color: var(--muted); margin-top: 4px; text-align: right; }
+    .ci-remove:hover { color: var(--sale); }
+    .drawer .foot { border-top: 1px solid var(--line); padding: 20px 22px; background: var(--card); }
+    .total-row { display: flex; justify-content: space-between; font-size: 1.05rem; margin-bottom: 4px; }
+    .total-row b { color: var(--price); font-size: 1.3rem; }
+    .foot .note { font-size: 0.72rem; color: var(--muted); margin-bottom: 14px; }
+    .checkout { width: 100%; padding: 14px; border-radius: 12px; background: var(--accent); color: #fff; font-size: 0.95rem; font-weight: 500; transition: background .2s; }
+    .checkout:hover { background: var(--accent-dark); }
+    .checkout:disabled { background: #ddd; cursor: not-allowed; }
 
-    /* ===== Courses ===== */
-    .courses {
-      padding: 120px 0;
-      background: #F5EDE0;
-    }
-    .courses-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-    }
-    .course-card {
-      background: #fff;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-    .course-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
-    }
-    .course-card-img {
-      height: 220px;
-      overflow: hidden;
-    }
-    .course-card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-    .course-card:hover .course-card-img img {
-      transform: scale(1.08);
-    }
-    .course-card-body {
-      padding: 28px 24px;
-    }
-    .course-card-body .name-en {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
-      color: #C5A572;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .course-card-body h3 {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: #2D4A3E;
-      margin-bottom: 12px;
-    }
-    .course-card-body p {
-      font-size: 0.85rem;
-      color: #666;
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-    .course-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 16px;
-      border-top: 1px solid #F0E8DA;
-      font-size: 0.8rem;
-      color: #888;
-    }
-    .course-meta .price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: #C5A572;
-    }
-    .course-features {
-      list-style: none;
-      margin-top: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .course-features li {
-      font-size: 0.78rem;
-      color: #777;
-      padding-left: 16px;
-      position: relative;
-    }
-    .course-features li::before {
-      content: '◆';
-      position: absolute;
-      left: 0;
-      color: #C5A572;
-      font-size: 0.55rem;
-      top: 2px;
-    }
+    /* ===== Footer / notice ===== */
+    .notice { background: #f4ede2; border-radius: 14px; padding: 20px 24px; margin: 0 0 60px; font-size: 0.82rem; color: #7a6f5f; }
+    .notice b { color: var(--accent-dark); }
+    footer { border-top: 1px solid var(--line); padding: 40px 0; text-align: center; color: var(--muted); font-size: 0.82rem; }
+    footer .logo { font-size: 1.2rem; margin-bottom: 8px; color: var(--ink); }
 
-    /* ===== Gallery ===== */
-    .gallery {
-      padding: 120px 0;
-      background: #FDF8F0;
+    .toast {
+      position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: var(--ink); color: #fff; padding: 12px 24px; border-radius: 999px; font-size: 0.85rem;
+      opacity: 0; pointer-events: none; transition: all .25s ease; z-index: 200;
     }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 250px;
-      gap: 12px;
-    }
-    .gallery-item {
-      overflow: hidden;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease, filter 0.4s ease;
-    }
-    .gallery-item:hover img {
-      transform: scale(1.1);
-      filter: brightness(1.05);
-    }
-    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-    .gallery-item:nth-child(6) { grid-column: span 2; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* ===== Instructor ===== */
-    .instructor {
-      padding: 120px 0;
-      background: #F5EDE0;
-    }
-    .instructor-grid {
-      display: grid;
-      grid-template-columns: 350px 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-    .instructor-photo {
-      position: relative;
-    }
-    .instructor-photo img {
-      border-radius: 4px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-    }
-    .instructor-photo::before {
-      content: '';
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      right: -15px;
-      bottom: -15px;
-      border: 1px solid #C5A572;
-      border-radius: 4px;
-      z-index: -1;
-    }
-    .instructor-info .name-en {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.85rem;
-      color: #C5A572;
-      letter-spacing: 0.15em;
-      margin-bottom: 4px;
-    }
-    .instructor-info h3 {
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 500;
-      color: #2D4A3E;
-      margin-bottom: 4px;
-    }
-    .instructor-info .title {
-      font-size: 0.85rem;
-      color: #888;
-      margin-bottom: 24px;
-    }
-    .instructor-info .bio {
-      font-size: 0.92rem;
-      color: #555;
-      line-height: 2;
-      margin-bottom: 24px;
-    }
-    .credentials {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .credentials li {
-      font-size: 0.75rem;
-      color: #2D4A3E;
-      background: rgba(45, 74, 62, 0.08);
-      padding: 6px 14px;
-      border-radius: 20px;
-      letter-spacing: 0.03em;
-    }
-
-    /* ===== FAQ ===== */
-    .faq {
-      padding: 120px 0;
-      background: #FDF8F0;
-    }
-    .faq-list {
-      max-width: 750px;
-      margin: 0 auto;
-    }
-    .faq-item {
-      border-bottom: 1px solid rgba(197, 165, 114, 0.25);
-    }
-    .faq-question {
-      width: 100%;
-      background: none;
-      border: none;
-      padding: 24px 40px 24px 0;
-      font-family: 'Noto Sans JP', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 400;
-      color: #2D4A3E;
-      text-align: left;
-      cursor: pointer;
-      position: relative;
-      transition: color 0.3s ease;
-    }
-    .faq-question:hover { color: #C5A572; }
-    .faq-question::after {
-      content: '+';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      color: #C5A572;
-      transition: transform 0.3s ease;
-    }
-    .faq-item.active .faq-question::after {
-      transform: translateY(-50%) rotate(45deg);
-    }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.4s ease;
-    }
-    .faq-item.active .faq-answer {
-      max-height: 200px;
-      padding-bottom: 24px;
-    }
-    .faq-answer p {
-      font-size: 0.88rem;
-      color: #666;
-      line-height: 1.9;
-    }
-
-    /* ===== Contact ===== */
-    .contact {
-      padding: 100px 0;
-      background: #2D4A3E;
-      color: #fff;
-    }
-    .contact .section-title h2 { color: #fff; }
-    .contact-inner {
-      text-align: center;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    .contact-item {
-      margin-bottom: 24px;
-    }
-    .contact-item .label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
-      color: #C5A572;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .contact-item .value {
-      font-size: 0.92rem;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.6;
-    }
-    .contact-item .value a {
-      color: #C5A572;
-      transition: opacity 0.3s ease;
-    }
-    .contact-item .value a:hover { opacity: 0.7; }
-
-    /* ===== Footer ===== */
-    .footer {
-      padding: 30px 0;
-      background: #243D33;
-      text-align: center;
-    }
-    .footer p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.1em;
-    }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 900px) {
-      .nav { padding: 0 24px; }
-      .nav-links {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: rgba(253, 248, 240, 0.98);
-        flex-direction: column;
-        align-items: center;
-        padding: 30px 0;
-        gap: 20px;
-        transform: translateY(-120%);
-        transition: transform 0.4s ease;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      }
-      .nav-links.open { transform: translateY(0); }
-      .hamburger { display: flex; }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .courses-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
-      .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 180px;
-      }
-      .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
-      .gallery-item:nth-child(5) { grid-column: span 1; }
-      .instructor-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
-      .hero-content .catchcopy { font-size: 1.7rem; }
-      .hero-content .catchcopy-en { font-size: 0.9rem; }
-      .section-title h2 { font-size: 1.8rem; }
-    }
-    @media (max-width: 600px) {
-      .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
-      .gallery-item:nth-child(1) { grid-column: span 1; }
-      .hero-content .catchcopy { font-size: 1.4rem; letter-spacing: 0.08em; }
+    @media (max-width: 560px) {
+      .modal .m-grid { grid-template-columns: 1fr; }
+      .modal .m-img { aspect-ratio: 16/10; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Navigation -->
-  <nav class="nav" id="nav">
-    <a href="#hero" class="nav-logo">ma-<span>fille</span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about">About</a></li>
-      <li><a href="#courses">Courses</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#instructor">Instructor</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="メニュー">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero" id="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1 class="catchcopy">小さなひと皿に、大きな感動を</h1>
-      <p class="catchcopy-en">Where Every Petit Plate Tells a Story</p>
-      <p class="sub">ma-fille — パリの風薫る教室で、あなただけの一皿を</p>
+  <header>
+    <div class="container nav">
+      <a href="#" class="logo">work<span>endo</span></a>
+      <button class="cart-btn" id="openCart">
+        <span>🛒 カート</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
     </div>
-    <div class="hero-scroll">Scroll</div>
-  </section>
+  </header>
 
-  <!-- About -->
-  <section class="about" id="about">
+  <section class="hero">
     <div class="container">
-      <div class="about-grid">
-        <div class="about-image fade-in">
-          <img src="images/original-05.jpg" alt="ma-fille キッチン" loading="lazy">
-        </div>
-        <div class="about-text fade-in">
-          <p class="en">About Us</p>
-          <h2>ma-filleについて</h2>
-          <br>
-          <p>ma-filleは、パリの名門 Le Cordon Bleu で修業を積んだ遠藤伸子が主宰する少人数制の料理教室です。フランス料理の技法をベースに、家庭でも再現できるエレガントな料理をお伝えします。</p>
-          <br>
-          <p>季節の食材を大切にし、見た目の美しさと味わいの深さを追求する——そんな「プチ」だけど本格的な料理の世界へ、あなたをご招待します。</p>
-        </div>
-      </div>
+      <p class="en" id="tagEn">Little things for a better everyday</p>
+      <h1 id="shopTagline">毎日をちょっと素敵にする、暮らしの雑貨店</h1>
+      <p>厳選したアイテムを、あなたのもとへ直送でお届けします。</p>
+      <a href="#shop" class="cta">商品を見る</a>
     </div>
   </section>
 
-  <!-- Courses -->
-  <section class="courses" id="courses">
-    <div class="container">
-      <div class="section-title fade-in">
-        <p class="en">Courses</p>
-        <h2>コース紹介</h2>
-        <span class="line"></span>
-      </div>
-      <div class="courses-grid">
-        <!-- Course 1 -->
-        <div class="course-card fade-in">
-          <div class="course-card-img">
-            <img src="images/original-01.jpg" alt="フレンチ基礎コース" loading="lazy">
-          </div>
-          <div class="course-card-body">
-            <p class="name-en">French Basics</p>
-            <h3>フレンチ基礎コース</h3>
-            <p>フランス料理の基本技法を丁寧に学ぶコース。ソースの作り方から盛り付けまで、基礎を確実に身につけます。季節ごとに変わるメニューで、毎回新しい発見があります。</p>
-            <div class="course-meta">
-              <span>月2回・全6回</span>
-              <span class="price">¥48,000</span>
-            </div>
-            <ul class="course-features">
-              <li>少人数制（最大6名）</li>
-              <li>全レシピカード付き</li>
-              <li>食材・道具すべて込み</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Course 2 -->
-        <div class="course-card fade-in">
-          <div class="course-card-img">
-            <img src="images/original-07.jpg" alt="パティスリーコース" loading="lazy">
-          </div>
-          <div class="course-card-body">
-            <p class="name-en">Pâtisserie</p>
-            <h3>パティスリーコース</h3>
-            <p>本場フランスのお菓子づくりを学ぶ専門コース。タルト、エクレア、マカロンなど、美しいスイーツの技法を習得します。見た目も味も本格派のお菓子をご自宅で再現できるようになります。</p>
-            <div class="course-meta">
-              <span>月2回・全8回</span>
-              <span class="price">¥64,000</span>
-            </div>
-            <ul class="course-features">
-              <li>専門パティシエ監修</li>
-              <li>お持ち帰りボックス付き</li>
-              <li>ラッピング講座含む</li>
-            </ul>
-          </div>
-        </div>
-        <!-- Course 3 -->
-        <div class="course-card fade-in">
-          <div class="course-card-img">
-            <img src="images/original-08.jpg" alt="おもてなし料理コース" loading="lazy">
-          </div>
-          <div class="course-card-body">
-            <p class="name-en">Art de Recevoir</p>
-            <h3>おもてなし料理コース</h3>
-            <p>ホームパーティーで輝く料理とテーブルコーディネートを学ぶコース。前菜からデザートまでのフルコースを実践します。大切なゲストを迎える日のための、特別なレッスンです。</p>
-            <div class="course-meta">
-              <span>月1回・全4回</span>
-              <span class="price">¥36,000</span>
-            </div>
-            <ul class="course-features">
-              <li>テーブルコーディネート実習</li>
-              <li>ワインペアリング講座</li>
-              <li>フルコース実食付き</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <main class="container" id="shop">
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+    <div class="notice" id="notice"></div>
+  </main>
 
-  <!-- Gallery -->
-  <section class="gallery" id="gallery">
+  <footer>
     <div class="container">
-      <div class="section-title fade-in">
-        <p class="en">Gallery</p>
-        <h2>ギャラリー</h2>
-        <span class="line"></span>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-item fade-in"><img src="images/original-01.jpg" alt="ビュッフェ全景" loading="lazy"></div>
-        <div class="gallery-item fade-in"><img src="images/original-02.jpg" alt="デザート＆フィンガーフード" loading="lazy"></div>
-        <div class="gallery-item fade-in"><img src="images/original-03.jpg" alt="プチフード" loading="lazy"></div>
-        <div class="gallery-item fade-in"><img src="images/original-04.jpg" alt="テーブルセッティング" loading="lazy"></div>
-        <div class="gallery-item fade-in"><img src="images/original-05.jpg" alt="デコレーション" loading="lazy"></div>
-        <div class="gallery-item fade-in"><img src="images/original-07.jpg" alt="パイ" loading="lazy"></div>
-        <div class="gallery-item fade-in"><img src="images/original-08.jpg" alt="盛り付けプレート" loading="lazy"></div>
-        <div class="gallery-item fade-in"><img src="images/original-09.jpg" alt="フィンガーフード" loading="lazy"></div>
-        <div class="gallery-item fade-in"><img src="images/original-10.jpg" alt="アペタイザー" loading="lazy"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Instructor -->
-  <section class="instructor" id="instructor">
-    <div class="container">
-      <div class="section-title fade-in">
-        <p class="en">Instructor</p>
-        <h2>講師紹介</h2>
-        <span class="line"></span>
-      </div>
-      <div class="instructor-grid">
-        <div class="instructor-photo fade-in">
-          <img src="images/original-04.jpg" alt="遠藤 伸子" loading="lazy">
-        </div>
-        <div class="instructor-info fade-in">
-          <p class="name-en">Nobuko Endo</p>
-          <h3>遠藤 伸子</h3>
-          <p class="title">料理研究家・フランス料理講師</p>
-          <p class="bio">パリの名門料理学校 Le Cordon Bleu にて修業。フランス料理の技法を深く学んだ後、帰国。「フランス料理をもっと身近に、もっと楽しく」という想いから、料理教室 ma-fille を開校。美しい盛り付けと温かい雰囲気のレッスンで、初心者からリピーターまで幅広い支持を集めている。</p>
-          <ul class="credentials">
-            <li>Le Cordon Bleu グランディプロム取得</li>
-            <li>フランス料理技術認定 上級</li>
-            <li>食品衛生責任者</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="faq" id="faq">
-    <div class="container">
-      <div class="section-title fade-in">
-        <p class="en">FAQ</p>
-        <h2>よくある質問</h2>
-        <span class="line"></span>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item fade-in">
-          <button class="faq-question">料理初心者でも参加できますか？</button>
-          <div class="faq-answer">
-            <p>もちろんです！フレンチ基礎コースは初心者の方を対象に設計されています。包丁の持ち方から丁寧にお伝えしますので、安心してご参加ください。</p>
-          </div>
-        </div>
-        <div class="faq-item fade-in">
-          <button class="faq-question">持ち物は何が必要ですか？</button>
-          <div class="faq-answer">
-            <p>エプロンとハンドタオルをお持ちください。調理器具・食材はすべてこちらでご用意いたします。</p>
-          </div>
-        </div>
-        <div class="faq-item fade-in">
-          <button class="faq-question">体験レッスンはありますか？</button>
-          <div class="faq-answer">
-            <p>はい、各コースとも初回は体験レッスン（¥3,500）としてご参加いただけます。お気軽にお問い合わせください。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="section-title fade-in">
-        <p class="en">Contact</p>
-        <h2>お問い合わせ</h2>
-        <span class="line"></span>
-      </div>
-      <div class="contact-inner fade-in">
-        <div class="contact-item">
-          <p class="label">Email</p>
-          <p class="value"><a href="mailto:info@ma-fille.jp">info@ma-fille.jp</a></p>
-        </div>
-        <div class="contact-item">
-          <p class="label">Address</p>
-          <p class="value">〒150-0001 東京都渋谷区神宮前4-12-8<br>メゾンド表参道 2F</p>
-        </div>
-        <div class="contact-item">
-          <p class="label">Hours</p>
-          <p class="value">火〜土 10:00 - 19:00（日・月・祝休み）</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2026 ma-fille Cooking Class. All rights reserved.</p>
+      <div class="logo">work<span style="color:var(--accent)">endo</span></div>
+      <p>© 2026 workendo. All rights reserved.</p>
+      <p style="margin-top:6px; font-size:0.75rem;">特定商取引法に基づく表記 / プライバシーポリシー / お問い合わせ</p>
     </div>
   </footer>
 
-  <!-- JavaScript -->
+  <!-- Product modal -->
+  <div class="overlay" id="overlay"></div>
+  <div class="modal" id="modal"></div>
+
+  <!-- Cart drawer -->
+  <aside class="drawer" id="drawer">
+    <h3>カート <button class="close-x" style="position:static" id="closeCart">×</button></h3>
+    <div class="items" id="cartItems"></div>
+    <div class="foot">
+      <div class="total-row"><span>合計</span><b id="cartTotal">¥0</b></div>
+      <p class="note">※ 送料・決済は導入するサービスに応じて別途設定します</p>
+      <button class="checkout" id="checkout" disabled>レジに進む</button>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
   <script>
-    // Navbar scroll effect
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 50);
-    });
+    const yen = n => '¥' + n.toLocaleString('ja-JP');
+    const grad = colors => `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
+    let DATA = null;
+    let activeCat = 'all';
+    const CART_KEY = 'workendo_cart';
+    let cart = JSON.parse(localStorage.getItem(CART_KEY) || '{}');
 
-    // Hamburger menu
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      navLinks.classList.toggle('open');
-    });
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('open');
-      });
-    });
+    const $ = s => document.querySelector(s);
 
-    // Fade-in on scroll (IntersectionObserver)
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-    fadeEls.forEach(el => observer.observe(el));
+    async function boot() {
+      try {
+        const res = await fetch('products.json');
+        if (!res.ok) throw new Error('load fail');
+        DATA = await res.json();
+      } catch (e) {
+        $('#grid').innerHTML = '<p style="color:var(--muted)">商品データ (products.json) を読み込めませんでした。ローカルで開く場合は簡易サーバー経由でご覧ください（例: <code>python3 -m http.server</code>）。</p>';
+        return;
+      }
+      $('#shopTagline').textContent = DATA.shop.tagline;
+      $('#tagEn').textContent = DATA.shop.tagline_en;
+      $('#notice').innerHTML = '<b>お知らせ:</b> ' + DATA.shop.notice;
+      renderFilters();
+      renderGrid();
+      renderCart();
+      wire();
+    }
 
-    // FAQ accordion
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const isActive = item.classList.contains('active');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-        if (!isActive) item.classList.add('active');
+    function renderFilters() {
+      $('#filters').innerHTML = DATA.categories.map(c =>
+        `<button class="chip ${c.id === activeCat ? 'active' : ''}" data-cat="${c.id}">${c.name}</button>`
+      ).join('');
+    }
+
+    function productById(id) { return DATA.products.find(p => p.id === id); }
+
+    function renderGrid() {
+      const list = DATA.products.filter(p => activeCat === 'all' || p.category === activeCat);
+      $('#grid').innerHTML = list.map(p => {
+        const badges = (p.tags || []).map(t =>
+          `<span class="badge ${t === '送料無料' ? 'free' : ''}">${t}</span>`).join('');
+        return `
+        <div class="card">
+          <div class="thumb" data-open="${p.id}" style="background:${grad(p.color)}">
+            <span class="ph">${p.name.charAt(0)}</span>
+            <div class="badges">${badges}</div>
+            ${!p.stock ? '<div class="soldout">SOLD OUT</div>' : ''}
+          </div>
+          <div class="info">
+            <p class="name">${p.name}</p>
+            <div class="price-row">
+              <span class="price">${yen(p.price)}<small> 税込</small></span>
+              <button class="add" data-add="${p.id}" ${!p.stock ? 'disabled' : ''}>${p.stock ? 'カートに追加' : '欠品中'}</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function openModal(id) {
+      const p = productById(id);
+      const catName = (DATA.categories.find(c => c.id === p.category) || {}).name || '';
+      $('#modal').innerHTML = `
+        <button class="close-x" id="closeModal">×</button>
+        <div class="m-grid">
+          <div class="m-img" style="background:${grad(p.color)}"><span class="ph">${p.name.charAt(0)}</span></div>
+          <div class="m-body">
+            <p class="m-cat">${catName}</p>
+            <h2 class="m-name">${p.name}</h2>
+            <p class="m-desc">${p.description}</p>
+            <p class="m-price">${yen(p.price)} <small>税込</small></p>
+            <button class="m-add" data-add="${p.id}" ${!p.stock ? 'disabled' : ''}>${p.stock ? 'カートに追加する' : '現在欠品中です'}</button>
+          </div>
+        </div>`;
+      $('#overlay').classList.add('open');
+      $('#modal').classList.add('open');
+      $('#closeModal').onclick = closeModal;
+    }
+    function closeModal() {
+      $('#overlay').classList.remove('open');
+      $('#modal').classList.remove('open');
+    }
+
+    function addToCart(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      save();
+      renderCart();
+      showToast('カートに追加しました');
+    }
+    function setQty(id, q) {
+      if (q <= 0) delete cart[id]; else cart[id] = q;
+      save(); renderCart();
+    }
+    function save() { localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+
+    function renderCart() {
+      const ids = Object.keys(cart);
+      const count = ids.reduce((s, id) => s + cart[id], 0);
+      $('#cartCount').textContent = count;
+      let total = 0;
+      if (ids.length === 0) {
+        $('#cartItems').innerHTML = '<div class="empty">カートは空です。<br>気になる商品を追加してみましょう。</div>';
+      } else {
+        $('#cartItems').innerHTML = ids.map(id => {
+          const p = productById(id); if (!p) return '';
+          const q = cart[id]; total += p.price * q;
+          return `
+          <div class="citem">
+            <div class="ci-img" style="background:${grad(p.color)}"><span>${p.name.charAt(0)}</span></div>
+            <div class="ci-main">
+              <p class="ci-name">${p.name}</p>
+              <p class="ci-price">${yen(p.price)}</p>
+              <div class="qty">
+                <button data-q="${id}:${q-1}">−</button>
+                <span>${q}</span>
+                <button data-q="${id}:${q+1}">＋</button>
+              </div>
+            </div>
+            <button class="ci-remove" data-q="${id}:0">削除</button>
+          </div>`;
+        }).join('');
+      }
+      $('#cartTotal').textContent = yen(total);
+      $('#checkout').disabled = ids.length === 0;
+    }
+
+    let toastTimer;
+    function showToast(msg) {
+      const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+      clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+    }
+
+    function wire() {
+      document.body.addEventListener('click', e => {
+        const open = e.target.closest('[data-open]');
+        const add = e.target.closest('[data-add]');
+        const chip = e.target.closest('[data-cat]');
+        const q = e.target.closest('[data-q]');
+        if (open) openModal(open.dataset.open);
+        if (add) addToCart(add.dataset.add);
+        if (chip) { activeCat = chip.dataset.cat; renderFilters(); renderGrid(); }
+        if (q) { const [id, val] = q.dataset.q.split(':'); setQty(id, parseInt(val)); }
       });
-    });
+      $('#openCart').onclick = () => $('#drawer').classList.add('open');
+      $('#closeCart').onclick = () => $('#drawer').classList.remove('open');
+      $('#overlay').onclick = closeModal;
+      $('#checkout').onclick = () => showToast('決済サービスを接続するとここで購入完了できます');
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); $('#drawer').classList.remove('open'); } });
+    }
+
+    boot();
   </script>
-
 </body>
 </html>

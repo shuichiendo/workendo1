@@ -1,0 +1,122 @@
+{
+  "shop": {
+    "name": "workendo",
+    "tagline": "毎日をちょっと素敵にする、暮らしの雑貨店",
+    "tagline_en": "Little things for a better everyday",
+    "email": "shop@example.com",
+    "notice": "※これはサンプルです。ネッシー（NETSEA）で「直送(ドロップシッピング)対応」の商品を選び、下記フィールドを差し替えてください。"
+  },
+  "categories": [
+    { "id": "all", "name": "すべて" },
+    { "id": "interior", "name": "インテリア" },
+    { "id": "kitchen", "name": "キッチン" },
+    { "id": "beauty", "name": "美容・健康" },
+    { "id": "fashion", "name": "ファッション雑貨" }
+  ],
+  "products": [
+    {
+      "id": "P001",
+      "name": "北欧風 リネンクッションカバー 45×45",
+      "category": "interior",
+      "price": 2480,
+      "cost": 980,
+      "netsea_id": "0000000",
+      "dropship": true,
+      "stock": true,
+      "color": ["#d9c9b3", "#b5a68f"],
+      "tags": ["新着", "送料無料"],
+      "description": "天然リネン混のやさしい風合い。お部屋の印象を手軽に変えられる定番サイズのクッションカバーです。ファスナー付きで洗濯も簡単。"
+    },
+    {
+      "id": "P002",
+      "name": "アロマディフューザー 木目調 300ml",
+      "category": "interior",
+      "price": 3980,
+      "cost": 1780,
+      "netsea_id": "0000000",
+      "dropship": true,
+      "stock": true,
+      "color": ["#c9b89a", "#8a6f52"],
+      "tags": ["人気"],
+      "description": "超音波式で熱を使わず安心。7色LEDライト付きで、寝室やリビングの癒し空間づくりに。静音設計でオフィスにも。"
+    },
+    {
+      "id": "P003",
+      "name": "ステンレス真空タンブラー 480ml",
+      "category": "kitchen",
+      "price": 1980,
+      "cost": 720,
+      "netsea_id": "0000000",
+      "dropship": true,
+      "stock": true,
+      "color": ["#c7cdd2", "#8f979e"],
+      "tags": ["送料無料"],
+      "description": "保温・保冷どちらもOKの二重構造。結露しにくく、飲みごろの温度を長時間キープします。ギフトにも人気の一品。"
+    },
+    {
+      "id": "P004",
+      "name": "シリコン調理スプーン 5点セット",
+      "category": "kitchen",
+      "price": 2280,
+      "cost": 850,
+      "netsea_id": "0000000",
+      "dropship": true,
+      "stock": true,
+      "color": ["#e0b7a0", "#c58f74"],
+      "tags": ["新着"],
+      "description": "耐熱230℃、フライパンを傷つけないシリコン製。キッチンをおしゃれに彩るくすみカラー。継ぎ目のない一体成型で衛生的。"
+    },
+    {
+      "id": "P005",
+      "name": "フェイススチーマー 携帯ミスト",
+      "category": "beauty",
+      "price": 2980,
+      "cost": 1150,
+      "netsea_id": "0000000",
+      "dropship": true,
+      "stock": true,
+      "color": ["#e6c6d4", "#c493a8"],
+      "tags": ["人気"],
+      "description": "USB充電式、手のひらサイズのナノミスト美顔器。メイクの上からもうるおい補給。持ち運びに便利でデスクワークのお供に。"
+    },
+    {
+      "id": "P006",
+      "name": "オーガニックコットン フェイスタオル 3枚組",
+      "category": "beauty",
+      "price": 1780,
+      "cost": 640,
+      "netsea_id": "0000000",
+      "dropship": true,
+      "stock": true,
+      "color": ["#e3ddd2", "#bcae9a"],
+      "tags": ["送料無料"],
+      "description": "肌にやさしいオーガニックコットン100%。ふんわり吸水性が高く、毎日の洗顔が心地よく。ナチュラルカラーで統一。"
+    },
+    {
+      "id": "P007",
+      "name": "本革風 ミニショルダーバッグ",
+      "category": "fashion",
+      "price": 3480,
+      "cost": 1420,
+      "netsea_id": "0000000",
+      "dropship": true,
+      "stock": true,
+      "color": ["#b79b7d", "#7d6248"],
+      "tags": ["新着"],
+      "description": "スマホと最低限の小物が入る使いやすいサイズ感。上品な合成皮革で普段使いから旅行まで。ショルダーは長さ調整可能。"
+    },
+    {
+      "id": "P008",
+      "name": "折りたたみ サングラス ケース付き",
+      "category": "fashion",
+      "price": 1580,
+      "cost": 520,
+      "netsea_id": "0000000",
+      "dropship": true,
+      "stock": false,
+      "color": ["#a9b0b6", "#6e767c"],
+      "tags": [],
+      "description": "コンパクトに折りたためてバッグの中でかさばらない。UV400カットでしっかり紫外線対策。専用ケース＆クロス付き。"
+    }
+  ]
+}

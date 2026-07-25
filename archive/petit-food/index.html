@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ma-fille | 小さなひと皿に、大きな感動を</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      color: #3A3A3A;
+      background-color: #FDF8F0;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    /* ===== Utility ===== */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-title h2 {
+      font-size: 2.4rem;
+      color: #2D4A3E;
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .section-title .en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: #C5A572;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .section-title .line {
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: #C5A572;
+      margin: 16px auto 0;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== Navigation ===== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 0 40px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(253, 248, 240, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(197, 165, 114, 0.15);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    .nav.scrolled {
+      background: rgba(253, 248, 240, 0.98);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #2D4A3E;
+      letter-spacing: 0.08em;
+    }
+    .nav-logo span { color: #C5A572; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: #3A3A3A;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #C5A572;
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: #C5A572; }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: #2D4A3E;
+      transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+    /* ===== Hero ===== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/original-06.jpg') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.12); }
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(45, 74, 62, 0.45) 0%,
+        rgba(45, 74, 62, 0.55) 50%,
+        rgba(45, 74, 62, 0.65) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      padding: 0 24px;
+    }
+    .hero-content .catchcopy {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 0.3s forwards;
+    }
+    .hero-content .catchcopy-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: #C5A572;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 0.6s forwards;
+    }
+    .hero-content .sub {
+      font-size: 0.95rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 0.9s forwards;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: fadeUp 1.2s ease 1.2s forwards;
+      opacity: 0;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.5);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollLine {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ===== About ===== */
+    .about {
+      padding: 120px 0;
+      background: #FDF8F0;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-image {
+      position: relative;
+    }
+    .about-image img {
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+    .about-image::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      width: 80px;
+      height: 80px;
+      border-top: 2px solid #C5A572;
+      border-left: 2px solid #C5A572;
+      pointer-events: none;
+    }
+    .about-image::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      right: -15px;
+      width: 80px;
+      height: 80px;
+      border-bottom: 2px solid #C5A572;
+      border-right: 2px solid #C5A572;
+      pointer-events: none;
+    }
+    .about-text h2 {
+      font-size: 2rem;
+      color: #2D4A3E;
+      margin-bottom: 8px;
+    }
+    .about-text .en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      color: #C5A572;
+      letter-spacing: 0.15em;
+      margin-bottom: 24px;
+    }
+    .about-text p {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: #555;
+    }
+
+    /* ===== Courses ===== */
+    .courses {
+      padding: 120px 0;
+      background: #F5EDE0;
+    }
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .course-card {
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    }
+    .course-card-img {
+      height: 220px;
+      overflow: hidden;
+    }
+    .course-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .course-card:hover .course-card-img img {
+      transform: scale(1.08);
+    }
+    .course-card-body {
+      padding: 28px 24px;
+    }
+    .course-card-body .name-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      color: #C5A572;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .course-card-body h3 {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #2D4A3E;
+      margin-bottom: 12px;
+    }
+    .course-card-body p {
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid #F0E8DA;
+      font-size: 0.8rem;
+      color: #888;
+    }
+    .course-meta .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #C5A572;
+    }
+    .course-features {
+      list-style: none;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .course-features li {
+      font-size: 0.78rem;
+      color: #777;
+      padding-left: 16px;
+      position: relative;
+    }
+    .course-features li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: #C5A572;
+      font-size: 0.55rem;
+      top: 2px;
+    }
+
+    /* ===== Gallery ===== */
+    .gallery {
+      padding: 120px 0;
+      background: #FDF8F0;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 250px;
+      gap: 12px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.4s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.1);
+      filter: brightness(1.05);
+    }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .gallery-item:nth-child(6) { grid-column: span 2; }
+
+    /* ===== Instructor ===== */
+    .instructor {
+      padding: 120px 0;
+      background: #F5EDE0;
+    }
+    .instructor-grid {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .instructor-photo {
+      position: relative;
+    }
+    .instructor-photo img {
+      border-radius: 4px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+    .instructor-photo::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: -15px;
+      bottom: -15px;
+      border: 1px solid #C5A572;
+      border-radius: 4px;
+      z-index: -1;
+    }
+    .instructor-info .name-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      color: #C5A572;
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+    }
+    .instructor-info h3 {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #2D4A3E;
+      margin-bottom: 4px;
+    }
+    .instructor-info .title {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 24px;
+    }
+    .instructor-info .bio {
+      font-size: 0.92rem;
+      color: #555;
+      line-height: 2;
+      margin-bottom: 24px;
+    }
+    .credentials {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .credentials li {
+      font-size: 0.75rem;
+      color: #2D4A3E;
+      background: rgba(45, 74, 62, 0.08);
+      padding: 6px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== FAQ ===== */
+    .faq {
+      padding: 120px 0;
+      background: #FDF8F0;
+    }
+    .faq-list {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(197, 165, 114, 0.25);
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 24px 40px 24px 0;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #2D4A3E;
+      text-align: left;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .faq-question:hover { color: #C5A572; }
+    .faq-question::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: #C5A572;
+      transition: transform 0.3s ease;
+    }
+    .faq-item.active .faq-question::after {
+      transform: translateY(-50%) rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding-bottom: 24px;
+    }
+    .faq-answer p {
+      font-size: 0.88rem;
+      color: #666;
+      line-height: 1.9;
+    }
+
+    /* ===== Contact ===== */
+    .contact {
+      padding: 100px 0;
+      background: #2D4A3E;
+      color: #fff;
+    }
+    .contact .section-title h2 { color: #fff; }
+    .contact-inner {
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .contact-item {
+      margin-bottom: 24px;
+    }
+    .contact-item .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      color: #C5A572;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .contact-item .value {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+    }
+    .contact-item .value a {
+      color: #C5A572;
+      transition: opacity 0.3s ease;
+    }
+    .contact-item .value a:hover { opacity: 0.7; }
+
+    /* ===== Footer ===== */
+    .footer {
+      padding: 30px 0;
+      background: #243D33;
+      text-align: center;
+    }
+    .footer p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .nav { padding: 0 24px; }
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(253, 248, 240, 0.98);
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 0;
+        gap: 20px;
+        transform: translateY(-120%);
+        transition: transform 0.4s ease;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      }
+      .nav-links.open { transform: translateY(0); }
+      .hamburger { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .courses-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 180px;
+      }
+      .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+      .gallery-item:nth-child(5) { grid-column: span 1; }
+      .instructor-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+      .hero-content .catchcopy { font-size: 1.7rem; }
+      .hero-content .catchcopy-en { font-size: 0.9rem; }
+      .section-title h2 { font-size: 1.8rem; }
+    }
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
+      .gallery-item:nth-child(1) { grid-column: span 1; }
+      .hero-content .catchcopy { font-size: 1.4rem; letter-spacing: 0.08em; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav-logo">ma-<span>fille</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#instructor">Instructor</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="catchcopy">小さなひと皿に、大きな感動を</h1>
+      <p class="catchcopy-en">Where Every Petit Plate Tells a Story</p>
+      <p class="sub">ma-fille — パリの風薫る教室で、あなただけの一皿を</p>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-image fade-in">
+          <img src="images/original-05.jpg" alt="ma-fille キッチン" loading="lazy">
+        </div>
+        <div class="about-text fade-in">
+          <p class="en">About Us</p>
+          <h2>ma-filleについて</h2>
+          <br>
+          <p>ma-filleは、パリの名門 Le Cordon Bleu で修業を積んだ遠藤伸子が主宰する少人数制の料理教室です。フランス料理の技法をベースに、家庭でも再現できるエレガントな料理をお伝えします。</p>
+          <br>
+          <p>季節の食材を大切にし、見た目の美しさと味わいの深さを追求する——そんな「プチ」だけど本格的な料理の世界へ、あなたをご招待します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses -->
+  <section class="courses" id="courses">
+    <div class="container">
+      <div class="section-title fade-in">
+        <p class="en">Courses</p>
+        <h2>コース紹介</h2>
+        <span class="line"></span>
+      </div>
+      <div class="courses-grid">
+        <!-- Course 1 -->
+        <div class="course-card fade-in">
+          <div class="course-card-img">
+            <img src="images/original-01.jpg" alt="フレンチ基礎コース" loading="lazy">
+          </div>
+          <div class="course-card-body">
+            <p class="name-en">French Basics</p>
+            <h3>フレンチ基礎コース</h3>
+            <p>フランス料理の基本技法を丁寧に学ぶコース。ソースの作り方から盛り付けまで、基礎を確実に身につけます。季節ごとに変わるメニューで、毎回新しい発見があります。</p>
+            <div class="course-meta">
+              <span>月2回・全6回</span>
+              <span class="price">¥48,000</span>
+            </div>
+            <ul class="course-features">
+              <li>少人数制（最大6名）</li>
+              <li>全レシピカード付き</li>
+              <li>食材・道具すべて込み</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Course 2 -->
+        <div class="course-card fade-in">
+          <div class="course-card-img">
+            <img src="images/original-07.jpg" alt="パティスリーコース" loading="lazy">
+          </div>
+          <div class="course-card-body">
+            <p class="name-en">Pâtisserie</p>
+            <h3>パティスリーコース</h3>
+            <p>本場フランスのお菓子づくりを学ぶ専門コース。タルト、エクレア、マカロンなど、美しいスイーツの技法を習得します。見た目も味も本格派のお菓子をご自宅で再現できるようになります。</p>
+            <div class="course-meta">
+              <span>月2回・全8回</span>
+              <span class="price">¥64,000</span>
+            </div>
+            <ul class="course-features">
+              <li>専門パティシエ監修</li>
+              <li>お持ち帰りボックス付き</li>
+              <li>ラッピング講座含む</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Course 3 -->
+        <div class="course-card fade-in">
+          <div class="course-card-img">
+            <img src="images/original-08.jpg" alt="おもてなし料理コース" loading="lazy">
+          </div>
+          <div class="course-card-body">
+            <p class="name-en">Art de Recevoir</p>
+            <h3>おもてなし料理コース</h3>
+            <p>ホームパーティーで輝く料理とテーブルコーディネートを学ぶコース。前菜からデザートまでのフルコースを実践します。大切なゲストを迎える日のための、特別なレッスンです。</p>
+            <div class="course-meta">
+              <span>月1回・全4回</span>
+              <span class="price">¥36,000</span>
+            </div>
+            <ul class="course-features">
+              <li>テーブルコーディネート実習</li>
+              <li>ワインペアリング講座</li>
+              <li>フルコース実食付き</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="section-title fade-in">
+        <p class="en">Gallery</p>
+        <h2>ギャラリー</h2>
+        <span class="line"></span>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item fade-in"><img src="images/original-01.jpg" alt="ビュッフェ全景" loading="lazy"></div>
+        <div class="gallery-item fade-in"><img src="images/original-02.jpg" alt="デザート＆フィンガーフード" loading="lazy"></div>
+        <div class="gallery-item fade-in"><img src="images/original-03.jpg" alt="プチフード" loading="lazy"></div>
+        <div class="gallery-item fade-in"><img src="images/original-04.jpg" alt="テーブルセッティング" loading="lazy"></div>
+        <div class="gallery-item fade-in"><img src="images/original-05.jpg" alt="デコレーション" loading="lazy"></div>
+        <div class="gallery-item fade-in"><img src="images/original-07.jpg" alt="パイ" loading="lazy"></div>
+        <div class="gallery-item fade-in"><img src="images/original-08.jpg" alt="盛り付けプレート" loading="lazy"></div>
+        <div class="gallery-item fade-in"><img src="images/original-09.jpg" alt="フィンガーフード" loading="lazy"></div>
+        <div class="gallery-item fade-in"><img src="images/original-10.jpg" alt="アペタイザー" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instructor -->
+  <section class="instructor" id="instructor">
+    <div class="container">
+      <div class="section-title fade-in">
+        <p class="en">Instructor</p>
+        <h2>講師紹介</h2>
+        <span class="line"></span>
+      </div>
+      <div class="instructor-grid">
+        <div class="instructor-photo fade-in">
+          <img src="images/original-04.jpg" alt="遠藤 伸子" loading="lazy">
+        </div>
+        <div class="instructor-info fade-in">
+          <p class="name-en">Nobuko Endo</p>
+          <h3>遠藤 伸子</h3>
+          <p class="title">料理研究家・フランス料理講師</p>
+          <p class="bio">パリの名門料理学校 Le Cordon Bleu にて修業。フランス料理の技法を深く学んだ後、帰国。「フランス料理をもっと身近に、もっと楽しく」という想いから、料理教室 ma-fille を開校。美しい盛り付けと温かい雰囲気のレッスンで、初心者からリピーターまで幅広い支持を集めている。</p>
+          <ul class="credentials">
+            <li>Le Cordon Bleu グランディプロム取得</li>
+            <li>フランス料理技術認定 上級</li>
+            <li>食品衛生責任者</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-title fade-in">
+        <p class="en">FAQ</p>
+        <h2>よくある質問</h2>
+        <span class="line"></span>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item fade-in">
+          <button class="faq-question">料理初心者でも参加できますか？</button>
+          <div class="faq-answer">
+            <p>もちろんです！フレンチ基礎コースは初心者の方を対象に設計されています。包丁の持ち方から丁寧にお伝えしますので、安心してご参加ください。</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in">
+          <button class="faq-question">持ち物は何が必要ですか？</button>
+          <div class="faq-answer">
+            <p>エプロンとハンドタオルをお持ちください。調理器具・食材はすべてこちらでご用意いたします。</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in">
+          <button class="faq-question">体験レッスンはありますか？</button>
+          <div class="faq-answer">
+            <p>はい、各コースとも初回は体験レッスン（¥3,500）としてご参加いただけます。お気軽にお問い合わせください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-title fade-in">
+        <p class="en">Contact</p>
+        <h2>お問い合わせ</h2>
+        <span class="line"></span>
+      </div>
+      <div class="contact-inner fade-in">
+        <div class="contact-item">
+          <p class="label">Email</p>
+          <p class="value"><a href="mailto:info@ma-fille.jp">info@ma-fille.jp</a></p>
+        </div>
+        <div class="contact-item">
+          <p class="label">Address</p>
+          <p class="value">〒150-0001 東京都渋谷区神宮前4-12-8<br>メゾンド表参道 2F</p>
+        </div>
+        <div class="contact-item">
+          <p class="label">Hours</p>
+          <p class="value">火〜土 10:00 - 19:00（日・月・祝休み）</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 ma-fille Cooking Class. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Navbar scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // Fade-in on scroll (IntersectionObserver)
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
