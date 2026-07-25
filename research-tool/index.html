@@ -224,7 +224,7 @@
         $('#srcLabel').textContent = isSample?'サンプル':(j.meta.source==='netsea'?'NETSEA API':j.meta.source);
         $('#bannerMsg').textContent = isSample
           ? '⚠️ これはテストツールです。現在はサンプルデータで動作中。NETSEAバイヤーAPI／CSVを接続すると実データで自動発掘できます。'
-          : `✓ NETSEAバイヤーAPIの実データで発掘中（${j.meta.product_count||DATA.length}件・取得 ${j.meta.fetched_at||''}）。想定売価・需要・競合等の一部は暫定値です（詳細は meta.provisional_fields）。`;
+          : `✓ NETSEA実データ（${j.meta.product_count||DATA.length}件）＋Yahoo!ショッピング相場で採点中：想定売価=相場中央値／需要=レビュー数／競合=ヒット数。返品可否・出荷日数等は暫定（詳細 meta.provisional_fields）。`;
       }catch(e){
         $('#cards').innerHTML='<p class="empty">データ(data/candidates.json)を読み込めませんでした。簡易サーバー経由(python3 -m http.server)で開いてください。</p>';
         return;
