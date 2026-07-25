@@ -101,7 +101,7 @@
   </header>
 
   <div class="banner">
-    <div class="wrap">⚠️ これはテストツールです。現在はサンプルデータで動作中。NETSEAバイヤーAPI／CSVを接続すると実データで自動発掘できます。</div>
+    <div class="wrap" id="bannerMsg">読み込み中…</div>
   </div>
 
   <div class="controls">
@@ -169,7 +169,7 @@
       rakuten:{name:'楽天市場',            mall:0.08, pay:0.033, ad_default:0.05},
       yahoo:  {name:'Yahoo!ショッピング',  mall:0.03, pay:0.035, ad_default:0.06},
     };
-    const CAT = {all:'すべて',interior:'インテリア',kitchen:'キッチン',beauty:'美容・健康',fashion:'ファッション',pet:'ペット',stationery:'文具'};
+    const CAT = {all:'すべて',interior:'家具・インテリア',kitchen:'キッチン',beauty:'美容・健康',fashion:'ファッション',pet:'ペット',stationery:'店舗・文具',sports:'ホビー・スポーツ',gadget:'家電・PC・AV',daily:'日用雑貨',food:'食品・飲料',other:'その他'};
     const yen = n => '¥'+Math.round(n).toLocaleString('ja-JP');
     const pct = n => (n*100).toFixed(1)+'%';
     const $ = s => document.querySelector(s);
@@ -220,7 +220,11 @@
         const res = await fetch('data/candidates.json');
         const j = await res.json();
         DATA = j.products;
-        $('#srcLabel').textContent = j.meta.source==='sample'?'サンプル':j.meta.source;
+        const isSample = j.meta.source==='sample';
+        $('#srcLabel').textContent = isSample?'サンプル':(j.meta.source==='netsea'?'NETSEA API':j.meta.source);
+        $('#bannerMsg').textContent = isSample
+          ? '⚠️ これはテストツールです。現在はサンプルデータで動作中。NETSEAバイヤーAPI／CSVを接続すると実データで自動発掘できます。'
+          : `✓ NETSEAバイヤーAPIの実データで発掘中（${j.meta.product_count||DATA.length}件・取得 ${j.meta.fetched_at||''}）。想定売価・需要・競合等の一部は暫定値です（詳細は meta.provisional_fields）。`;
       }catch(e){
         $('#cards').innerHTML='<p class="empty">データ(data/candidates.json)を読み込めませんでした。簡易サーバー経由(python3 -m http.server)で開いてください。</p>';
         return;
@@ -267,7 +271,7 @@
       const pass = all.filter(r=>r.v==='A'||r.v==='B').length;
       const avgMargin = all.length? all.reduce((a,r)=>a+r.c.margin,0)/all.length : 0;
       $('#summary').innerHTML = `
-        <div class="stat"><div class="n">${DATA.length}</div><div class="l">候補商品(サンプル)</div></div>
+        <div class="stat"><div class="n">${DATA.length}</div><div class="l">候補商品</div></div>
         <div class="stat good"><div class="n">${pass}</div><div class="l">採用ライン(A/B)</div></div>
         <div class="stat"><div class="n">${(avgMargin*100).toFixed(1)}%</div><div class="l">平均粗利率(${CH[$('#channel').value].name})</div></div>
         <div class="stat ${pass? '':'bad'}"><div class="n">${rows.length}</div><div class="l">現在の表示件数</div></div>`;
@@ -324,7 +328,7 @@
           <div class="brk-row"><span>広告費</span><span class="neg">−${yen(c.adCost)}</span></div>
           <div class="brk-row tot"><span>粗利額</span><span>${yen(c.profit)}（${pct(c.margin)}）</span></div>
           <div class="scorebars">${bars}</div>
-          <a class="netsea-link" href="https://www.netsea.jp/shop/${encodeURIComponent(p.netsea_id)}" target="_blank" rel="noopener">NETSEAで商品を確認 (ID:${p.netsea_id}) ↗</a>
+          <a class="netsea-link" href="${p.product_url || ('https://www.netsea.jp/shop/'+encodeURIComponent(p.netsea_id))}" target="_blank" rel="noopener">NETSEAで商品を確認 (ID:${p.netsea_id}) ↗</a>
         </div>
         <button class="detailbtn">利益・スコアの内訳 ▼</button>
       </div>`;
