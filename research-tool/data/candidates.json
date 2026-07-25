@@ -3,34 +3,34 @@
   "source": "netsea",
   "note": "NETSEAバイヤーAPIの実データ(取引承認済み・消費者直送可)。需要/競合/市場価格はYahoo!ショッピング公開APIの実データで補強。",
   "generated_for": "workendo 商品発掘ツール",
-  "fetched_at": "2026-07-26 00:10:59",
+  "fetched_at": "2026-07-26 01:19:52",
   "supplier_count": 185,
   "product_count": 350,
   "market_price_from_msrp": 52,
   "provisional_fields": {
    "market_price": "Yahoo!ショッピングのヒット価格中央値(卸1.05倍以上・3件以上)を採用(_market_source=yahoo_median)。無い時は上代(msrp)or カテゴリ別暫定。TODO: Amazon/楽天も併用して精度向上。",
-   "stock_qty": "APIは在庫の有無(sold_out_flag)のみ。在庫あり=100/品切れ=0の暫定。TODO: 数量は非公開。",
-   "ship_cost": "個別送料(ship_fee)がある時のみ実値。無い場合0(多くは条件付き送料無料)。TODO: 直送手数料・送料条件の反映。",
-   "returnable": "APIに返品可否なし→暫定true。TODO: サプライヤー返品ポリシー。",
-   "ship_days": "APIに出荷日数なし→暫定3日。TODO: delivery_terms解析 or 実績。",
+   "stock_qty": "在庫あり=100/品切れ=0(APIは有無のみ)。",
+   "ship_cost": "個別送料(ship_fee)がある時のみ実値、無い場合0。",
+   "returnable": "APIに返品可否なし→暫定true。",
+   "ship_days": "APIに出荷日数なし→暫定3日。",
    "demand_index": "Yahoo!検索の上位ヒットのレビュー件数合計を対数で0-100に写像した需要代理指標。",
    "competitor_count": "Yahoo!検索の総ヒット数(totalResultsAvailable)を対数で0-40に写像した競合の目安。",
-   "supplier_score": "暫定70。TODO: 欠品率・出荷実績の蓄積。"
+   "supplier_score": "暫定70(欠品率・出荷実績の蓄積が必要)。"
   },
-  "enriched_at": "2026-07-26 00:54:05",
-  "market_price_from_yahoo": 151
+  "enriched_at": "2026-07-26 01:39:59",
+  "market_price_from_yahoo": 138
  },
  "fields_doc": {
   "netsea_id": "NETSEA商品管理番号(product_id)",
-  "wholesale": "卸価格(税抜・割引適用後の単価)",
+  "wholesale": "卸価格(税抜・割引適用後)",
   "ship_cost": "仕入送料(個別送料。無い場合0)",
-  "market_price": "想定販売価格(上代 or 暫定。_market_source参照)",
-  "stock_qty": "在庫(あり=100/品切れ=0の暫定)",
+  "market_price": "想定販売価格(_market_source参照)",
+  "stock_qty": "在庫(あり=100/品切れ=0)",
   "dropship": "消費者直送(direct_send_flag=Y)",
-  "returnable": "返品対応可否(暫定)",
-  "ship_days": "標準出荷日数(暫定)",
-  "demand_index": "需要の代理指標(0-100/暫定)",
-  "competitor_count": "競合出品者数の目安(暫定)",
+  "returnable": "返品可否(暫定)",
+  "ship_days": "出荷日数(暫定)",
+  "demand_index": "需要代理指標(0-100)",
+  "competitor_count": "競合の目安(0-40)",
   "supplier_score": "サプライヤー信頼度(0-100/暫定)",
   "product_url": "NETSEA商品ページURL",
   "_market_source": "market_priceの根拠(yahoo_median=Yahoo相場 / msrp=上代 / provisional_cat_markup=暫定)"
@@ -550,20 +550,20 @@
    "name": "【栽培キット】リトルガーデンプロ　ミニトマト",
    "wholesale": 600,
    "ship_cost": 0,
-   "market_price": 1400,
+   "market_price": 1000,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 7,
-   "competitor_count": 8,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#d3c9bb",
     "#a89a86"
    ],
    "product_url": "https://www.netsea.jp/shop/90831/LGP-01",
-   "_market_source": "yahoo_median"
+   "_market_source": "msrp"
   },
   {
    "id": "N0024",
@@ -573,20 +573,20 @@
    "name": "【JANE】 北海道　沖縄　離島　遠隔地送料チケット",
    "wholesale": 1026,
    "ship_cost": 0,
-   "market_price": 1500,
+   "market_price": 2150,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 78,
-   "competitor_count": 27,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#d3c9bb",
     "#a89a86"
    ],
    "product_url": "https://www.netsea.jp/shop/94847/160420souryou",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0025",
@@ -601,8 +601,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 17,
-   "competitor_count": 15,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#a9c3b0",
@@ -1148,20 +1148,20 @@
    "name": "ワンピース ロングワンピ　ニットワンピ 長袖 デート ロングワンピース ケーブルニット パーティー　通勤",
    "wholesale": 3238,
    "ship_cost": 0,
-   "market_price": 3860,
+   "market_price": 8740,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 8,
-   "competitor_count": 11,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
     "#7d6248"
    ],
    "product_url": "https://www.netsea.jp/shop/430798/121110",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0050",
@@ -1176,8 +1176,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 76,
-   "competitor_count": 31,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#c0a48a",
@@ -1194,20 +1194,20 @@
    "name": "下着収納ボックス 収納ケース 仕切り 引き出し  (3種セット グレー)",
    "wholesale": 1000,
    "ship_cost": 0,
-   "market_price": 1920,
+   "market_price": 2400,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 52,
-   "competitor_count": 23,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#d3c9bb",
     "#a89a86"
    ],
    "product_url": "https://www.netsea.jp/shop/446398/cbn-001",
-   "_market_source": "yahoo_median"
+   "_market_source": "msrp"
   },
   {
    "id": "N0052",
@@ -1728,8 +1728,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 7,
-   "competitor_count": 11,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
@@ -1746,20 +1746,20 @@
    "name": "子供服　キッズ　長袖 Tシャツ ストライプ　夏秋",
    "wholesale": 1038,
    "ship_cost": 0,
-   "market_price": 3050,
+   "market_price": 2800,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 34,
-   "competitor_count": 12,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
     "#7d6248"
    ],
    "product_url": "https://www.netsea.jp/shop/659860/KD205",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0076",
@@ -1792,20 +1792,20 @@
    "name": "【1台二役】18650リチウム電池式モバイルバッテリー　防災用品　家計の助け　",
    "wholesale": 1381,
    "ship_cost": 0,
-   "market_price": 2420,
+   "market_price": 6930,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 25,
-   "competitor_count": 18,
+   "demand_index": 97,
+   "competitor_count": 36,
    "supplier_score": 70,
    "color": [
     "#aeb8c4",
     "#6f7c8c"
    ],
    "product_url": "https://www.netsea.jp/shop/673210/DK0007",
-   "_market_source": "provisional_cat_markup"
+   "_market_source": "yahoo_median"
   },
   {
    "id": "N0078",
@@ -2326,8 +2326,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 26,
-   "competitor_count": 7,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#a9c3b0",
@@ -2367,20 +2367,20 @@
    "name": "ウィンザーチェア　ダイニングチェア　チェア チェアー おしゃれ 椅子 北欧 カフェチェア",
    "wholesale": 13750,
    "ship_cost": 0,
-   "market_price": 25800,
+   "market_price": 27500,
    "stock_qty": 0,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 8,
-   "competitor_count": 7,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#d9c9b3",
     "#b5a68f"
    ],
    "product_url": "https://www.netsea.jp/shop/763120/CL-311",
-   "_market_source": "yahoo_median"
+   "_market_source": "msrp"
   },
   {
    "id": "N0103",
@@ -3034,12 +3034,12 @@
    "name": "AXL-441\tタッチセンサーナイトライト",
    "wholesale": 580,
    "ship_cost": 0,
-   "market_price": 1580,
+   "market_price": 1280,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 67,
+   "demand_index": 25,
    "competitor_count": 18,
    "supplier_score": 70,
    "color": [
@@ -3047,7 +3047,7 @@
     "#b5a68f"
    ],
    "product_url": "https://www.netsea.jp/shop/825424/AXL-441",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0132",
@@ -3057,20 +3057,20 @@
    "name": "2022新品　ベビー服　トップス　カバーオール　ロンパース　３色　66-90CM",
    "wholesale": 1076,
    "ship_cost": 0,
-   "market_price": 2980,
+   "market_price": 2910,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 24,
-   "competitor_count": 17,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
     "#7d6248"
    ],
    "product_url": "https://www.netsea.jp/shop/825968/yk19",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0133",
@@ -3517,20 +3517,20 @@
    "name": "天然石　手作り水晶原石リング　（アメジスト　グリーンフローライト、シトリン)",
    "wholesale": 1134,
    "ship_cost": 0,
-   "market_price": 8720,
+   "market_price": 2610,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 60,
-   "competitor_count": 31,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#a9c3b0",
     "#6f8f79"
    ],
    "product_url": "https://www.netsea.jp/shop/887739/R-GZJS-0821",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0153",
@@ -4120,8 +4120,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 8,
-   "competitor_count": 9,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
@@ -4143,8 +4143,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 48,
-   "competitor_count": 14,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
@@ -4166,8 +4166,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 10,
-   "competitor_count": 17,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
@@ -4718,8 +4718,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 7,
-   "competitor_count": 2,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
@@ -4742,7 +4742,7 @@
    "returnable": true,
    "ship_days": 3,
    "demand_index": 25,
-   "competitor_count": 17,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#d3c9bb",
@@ -4759,20 +4759,20 @@
    "name": "【栽培キット】リトルガーデンプロ　ミニニンジン",
    "wholesale": 600,
    "ship_cost": 0,
-   "market_price": 1480,
+   "market_price": 1000,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 7,
-   "competitor_count": 7,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#d3c9bb",
     "#a89a86"
    ],
    "product_url": "https://www.netsea.jp/shop/90831/LGP-02",
-   "_market_source": "yahoo_median"
+   "_market_source": "msrp"
   },
   {
    "id": "N0207",
@@ -5270,8 +5270,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 35,
-   "competitor_count": 17,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
@@ -5339,8 +5339,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 8,
-   "competitor_count": 14,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#c0a48a",
@@ -6001,20 +6001,20 @@
    "name": "空調ウエア用ファン2個 USB接続ケーブル付き MABUCHIモーター採用 9羽根ファン 静音 超軽量",
    "wholesale": 960,
    "ship_cost": 0,
-   "market_price": 6980,
+   "market_price": 2590,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 33,
-   "competitor_count": 15,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
     "#7d6248"
    ],
    "product_url": "https://www.netsea.jp/shop/673210/airfan",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0261",
@@ -6029,8 +6029,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 57,
-   "competitor_count": 20,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#a9c3b0",
@@ -6530,20 +6530,20 @@
    "name": "【切り売り/約1m】113.サージカルステンレス製 【SUS316L】チェーン【ガンメタ】",
    "wholesale": 901,
    "ship_cost": 0,
-   "market_price": 1180,
+   "market_price": 2070,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 26,
-   "competitor_count": 7,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#a9c3b0",
     "#6f8f79"
    ],
    "product_url": "https://www.netsea.jp/shop/761146/stainlesschain-113",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0284",
@@ -6719,8 +6719,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 40,
-   "competitor_count": 20,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#d3c9bb",
@@ -6737,20 +6737,20 @@
    "name": "除菌ウェット大判 7days アルコール 10枚入",
    "wholesale": 360,
    "ship_cost": 0,
-   "market_price": 2280,
+   "market_price": 940,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 53,
-   "competitor_count": 22,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#e6c6d4",
     "#c493a8"
    ],
    "product_url": "https://www.netsea.jp/shop/777824/9519125",
-   "_market_source": "yahoo_median"
+   "_market_source": "provisional_cat_markup"
   },
   {
    "id": "N0293",
@@ -6760,20 +6760,20 @@
    "name": "ディズニー リトルマーメイド ステンドグラス風スタンド付まな板",
    "wholesale": 720,
    "ship_cost": 0,
-   "market_price": 2980,
+   "market_price": 1500,
    "stock_qty": 100,
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 8,
-   "competitor_count": 10,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#d3c9bb",
     "#a89a86"
    ],
    "product_url": "https://www.netsea.jp/shop/779951/40067",
-   "_market_source": "yahoo_median"
+   "_market_source": "msrp"
   },
   {
    "id": "N0294",
@@ -7524,8 +7524,8 @@
    "dropship": true,
    "returnable": true,
    "ship_days": 3,
-   "demand_index": 69,
-   "competitor_count": 29,
+   "demand_index": 25,
+   "competitor_count": 18,
    "supplier_score": 70,
    "color": [
     "#b79b7d",
